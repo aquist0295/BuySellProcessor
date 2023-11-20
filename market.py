@@ -1,6 +1,7 @@
 import json
 import logging
 from logging.handlers import RotatingFileHandler
+from datetime import datetime
 
 # logger settings
 logger = logging.getLogger('my_logger')
@@ -38,19 +39,26 @@ class Market:
             logger.debug("Response Body: %s", json.dumps(parsed, indent=4, sort_keys=True))
 
             # Handle and parse response
-            print("")
+
+            # Get the current time
+            now = datetime.now()
+            dt_string_Hour    = int(now.strftime("%H"))
+            dt_string_Minutes = int(now.strftime("%M"))
+
+        #    
+        while dt_string_Hour >= 9 and dt_string_Hour <= 16:
+            dt_string_Hour = int(now.strftime("%H"))
             data = response.json()
             if data is not None and "QuoteResponse" in data and "QuoteData" in data["QuoteResponse"]:
                 file1 = open('tickerInfo.txt', 'w')
                 for quote in data["QuoteResponse"]["QuoteData"]:
                     if quote is not None and "Product" in quote and "symbol" in quote["Product"]:
                         print("Symbol: " + quote["Product"]["symbol"])
-                        file1.write(quote["Product"]["symbol"])
+                        file1.write(quote["Product"]["symbol"] + " Time: " + str(dt_string_Hour) + " : " + str(dt_string_Minutes))
                     if quote is not None and "All" in quote and "lastTrade" in quote["All"]:
-                        print("Last Price: " + str(quote["All"]["lastTrade"]))
+                        print("Last Price: " + str(quote["All"]["lastTrade"]) + " Time: " + str(dt_string_Hour) + " : " + str(dt_string_Minutes))
                         file1.write(str(quote["All"]["lastTrade"]))
-                        file1.close()
-                   
+                        file1.close()                      
             else:
                 # Handle errors
                 if data is not None and 'QuoteResponse' in data and 'Messages' in data["QuoteResponse"] \
