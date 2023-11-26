@@ -1,12 +1,9 @@
 from __future__ import print_function
 import webbrowser
-import json
 import configparser
-import sys
-import requests
 from rauth import OAuth1Service
-from accounts.accounts import Accounts
-from market.market import Market
+#from accounts.accounts import Accounts
+from market import Market
 
 # loading configuration file
 config = configparser.ConfigParser()
@@ -42,7 +39,6 @@ def oauth():
 
 
 def main_menu(session, base_url):
-    
     mkt = Market(session, base_url)
     mkt.quotes()
        

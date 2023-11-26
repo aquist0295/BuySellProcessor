@@ -1,6 +1,5 @@
 import json
 from datetime import datetime
-#from market_quote import quote
 
 class Market:
  def __init__(self, session, base_url):
@@ -19,6 +18,7 @@ class Market:
 
     #set previous price of stock to arbitrary variable at this time
     old_price  = float(0.0)
+    ticker     = ""
 
     # Make API call for GET request
     response = self.session.get(url)
@@ -35,6 +35,8 @@ class Market:
                         new_price = quote["All"]["lastTrade"]
                         if new_price != old_price: 
                             print(str(new_price))
+                            #call function to send ticker and price to cpp class for processing
+
                             old_price = new_price
                 response = self.session.get(url)                
             else:
@@ -49,3 +51,4 @@ class Market:
                     break        
     else:
         print("Error: Quote API service error")
+
