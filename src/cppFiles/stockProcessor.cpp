@@ -6,7 +6,7 @@
 
 using namespace std;
 
-StockProcessor :: StockProcessor(string stock_ticker, double stock_current_price){
+StockProcessor :: StockProcessor(string stock_ticker, float stock_current_price){
     this->stock_ticker  = stock_ticker;
     this->stock_current_price = stock_current_price;
     stock_buy_price     = 0.0;
@@ -40,7 +40,7 @@ StockProcessor :: StockProcessor(string stock_ticker, double stock_current_price
 
 //#################################################################################################################################################################
 
-void StockProcessor :: setBuyPrice(double BuyOrderPrice, double BuyOrderQty){
+void StockProcessor :: setBuyPrice(float BuyOrderPrice, float BuyOrderQty){
    /*
      This function will process buy orders. If the BuyOrderPrice and BuyOrderQty match the current stock price, the order will be processed and added to
      the Stock_Buy_Activity table. Otherwise, the buy order will be added to the Buy_Order_queue for processing later.   
@@ -61,7 +61,7 @@ void StockProcessor :: setBuyPrice(double BuyOrderPrice, double BuyOrderQty){
 
 //#################################################################################################################################################################
 
-void StockProcessor :: setSellPrice(double SellOrderPrice, double SellOrderQty){
+void StockProcessor :: setSellPrice(float SellOrderPrice, float SellOrderQty){
     /*
      This function will process Sell orders. If the SellOrderPrice and SellOrderQty match the current stock price, the order will be processed and added to
      the Stock_Sell_Activity table. Otherwise, the Sell order will be added to the Sell_Order_queue for processing later.
