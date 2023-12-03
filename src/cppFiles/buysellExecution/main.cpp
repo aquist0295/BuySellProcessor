@@ -1,13 +1,23 @@
 #include <iostream>
+#include <pybind11/pybind11.h>
 #include "stockProcessor.cpp"
 
 using namespace std;
 
+namespace py = pybind11;
 
-int main(){
-StockProcessor p("aapl", 120.90);
+void print(string ticker, float price){
+    string ticker1 = ticker;
+    float price1 = price;
 
-p.setBuyPrice(130, 100);
-p.setSellPrice(120, 100);
+    StockProcessor processor(ticker1, price1);
+    processor.setBuyPrice(200.0, 200.0);
+}
 
-return 0;}
+
+PYBIND11_MODULE(Processor, m) {
+    m.doc() = "testin pybind with testpybind code";
+
+    m.def("print", &print, "A function that prints");
+}
+
