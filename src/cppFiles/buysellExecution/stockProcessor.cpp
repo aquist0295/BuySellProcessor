@@ -16,35 +16,34 @@ StockProcessor :: StockProcessor(string stock_ticker, float stock_current_price)
 
 }
 
-StockProcessor :: StockProcessor(){
-    cout<<"cheack"<<endl;
-}
-
-
 //#################################################################################################################################################################
-
-template <typename T, typename S> void StockProcessor :: setBuyPrice(T BuyOrderPrice, S BuyOrderQty){
+template <typename T, typename S> void StockProcessor :: setBuyPrice(T BuyOrderPrice, S BuyOrderQty, string queueTicker){
    /*
      This function will process buy orders. If the BuyOrderPrice and BuyOrderQty match the current stock price, the order will be processed and added to
      the Stock_Buy_Activity table. Otherwise, the buy order will be added to the Buy_Order_queue for processing later.   
    */
     stock_buy_price   = BuyOrderPrice;
     stock_buy_quatity = BuyOrderQty;
-    
+    string ticker_from_queue   = queueTicker;
+
+    if(ticker_from_queue != ""){
+        Stock_Buy_Activity[ticker_from_queue] = make_pair(BuyOrderPrice, BuyOrderQty);
+        getBuyPrice("PASS");
+        return;
+    }
+
     if(BuyOrderPrice >= stock_current_price){
         Stock_Buy_Activity[stock_ticker] = make_pair(BuyOrderPrice, BuyOrderQty);
         getBuyPrice("PASS");
     }
    
     else{
-        Buy_Order_queue[stock_ticker] = make_pair(BuyOrderPrice, BuyOrderQty);
         getBuyPrice("NO PASS");
     }
 }
 
 //#################################################################################################################################################################
-
-template <typename T, typename S> void StockProcessor :: setSellPrice(T SellOrderPrice, S SellOrderQty){
+template <typename T, typename S> void StockProcessor :: setSellPrice(T SellOrderPrice, S SellOrderQty, string queueTicker){
     /*
      This function will process Sell orders. If the SellOrderPrice and SellOrderQty match the current stock price, the order will be processed and added to
      the Stock_Sell_Activity table. Otherwise, the Sell order will be added to the Sell_Order_queue for processing later.
@@ -63,20 +62,25 @@ template <typename T, typename S> void StockProcessor :: setSellPrice(T SellOrde
     else{
         stock_sell_price    = SellOrderPrice;
         stock_sell_quatity  = SellOrderQty;
+        string ticker_from_queue   = queueTicker;
+
+        if(ticker_from_queue != ""){
+            Stock_Sell_Activity[ticker_from_queue] = make_pair(SellOrderPrice, SellOrderQty);
+            getBuyPrice("PASS");
+            return;
+        }
 
         if(SellOrderPrice <= stock_current_price){
             Stock_Sell_Activity[stock_ticker]= make_pair(SellOrderPrice, SellOrderQty);
             getSellPrice("PASS");
         }
         else{
-            Sell_Order_queue[stock_ticker] = make_pair(SellOrderPrice, SellOrderQty);
             getSellPrice("NO PASS");
         }
     }
 }
 
 //#################################################################################################################################################################
-
 void StockProcessor :: getBuyPrice(string BuyStatus){
     //This function will print Buy order status, depending on whether the order was processed immediately or added to the buy queue.
 
@@ -93,7 +97,6 @@ void StockProcessor :: getBuyPrice(string BuyStatus){
 }
 
 //#################################################################################################################################################################
-
 void StockProcessor :: getSellPrice(string SellStatus){
     //This function will print Sell order status, depending on whether the order was processed immediately or added to the Sell queue.
 
@@ -108,7 +111,3 @@ void StockProcessor :: getSellPrice(string SellStatus){
     }
 
 }
-
-//#################################################################################################################################################################
-
-
