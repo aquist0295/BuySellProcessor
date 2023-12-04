@@ -2,34 +2,23 @@
 #define QUEUINGBUY_SELL_H
 #include <map>
 #include <utility>
+#include "../buysellExecution/stockProcessor.h"
+
 
 using namespace std;
 
-class QueueMech{
+class Queues : public StockProcessor{
     private:
-    map<string, float >buyQueue;
-    map<string, float >sellQueue;
+    map<string, pair<float, float>> BuySideQueue;
+    map<string, pair<float, float>> SellSideQueue;
 
     public:
-    QueueMech();
-    pair<string, float> UpdateBuyQueue();
-    pair<string, float> UpdateSellQueue();
+    void AddBuySideQueue(float);
+    void AddSellSideQueue(float);
+    void CheckBuyPriceMatch(float);
+    void CheckSellPriceMatch(float);
 
-};
-
-class Buys : public QueueMech{
-    public:
-    Buys();
-    string ParseBuys();
-    void PrintBuys();
-
-};
-
-class Sells : public QueueMech{
-    public:
-    Sells();
-    string ParseSells();
-    void PrintSells();    
+    
 };
 
 #endif
