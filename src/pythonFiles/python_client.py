@@ -34,6 +34,7 @@ def oauth():
 
     # Step 3: Exchange the authorized request token for an authenticated OAuth 1 session
     session = etrade.get_auth_session(request_token,request_token_secret,params={"oauth_verifier": text_code})
+    print(str(session))
 
     main_menu(session, base_url)
 

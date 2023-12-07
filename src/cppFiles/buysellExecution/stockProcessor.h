@@ -23,9 +23,9 @@ class StockProcessor{
     //constructor
    StockProcessor(string, float);
 
-   template <typename T, typename S> void setBuyPrice(T , S, string);
+   template <typename T, typename S> bool setBuyPrice(T , S, string);
    template <typename T, typename S> void setSellPrice(T, S, string);
-   void getBuyPrice(string);
+   bool getBuyPrice(string);
    void getSellPrice(string);
 };
 
