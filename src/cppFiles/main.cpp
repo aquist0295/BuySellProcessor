@@ -16,7 +16,7 @@ int main(){
 
     if(passOrNopass == 0){
          Queues q("aapl", 100.00);
-         q.AddBuySideQueue(100.00, 96.78);
+         q.AddBuySideQueue(96.78);
     }
 
     
