@@ -17,7 +17,7 @@ StockProcessor :: StockProcessor(string stock_ticker, float stock_current_price)
 }
 
 //#################################################################################################################################################################
-template <typename T, typename S> void StockProcessor :: setBuyPrice(T BuyOrderPrice, S BuyOrderQty, string queueTicker){
+template <typename T, typename S> bool StockProcessor :: setBuyPrice(T BuyOrderPrice, S BuyOrderQty, string queueTicker){
    /*
      This function will process buy orders. If the BuyOrderPrice and BuyOrderQty match the current stock price, the order will be processed and added to
      the Stock_Buy_Activity table. Otherwise, the buy order will be added to the Buy_Order_queue for processing later.   
@@ -28,17 +28,16 @@ template <typename T, typename S> void StockProcessor :: setBuyPrice(T BuyOrderP
 
     if(ticker_from_queue != ""){
         Stock_Buy_Activity[ticker_from_queue] = make_pair(BuyOrderPrice, BuyOrderQty);
-        getBuyPrice("PASS");
-        return;
+        return getBuyPrice("PASS");
     }
 
     if(BuyOrderPrice >= stock_current_price){
         Stock_Buy_Activity[stock_ticker] = make_pair(BuyOrderPrice, BuyOrderQty);
-        getBuyPrice("PASS");
+        return getBuyPrice("PASS");
     }
    
     else{
-        getBuyPrice("NO PASS");
+       return getBuyPrice("NO PASS");
     }
 }
 
@@ -81,17 +80,21 @@ template <typename T, typename S> void StockProcessor :: setSellPrice(T SellOrde
 }
 
 //#################################################################################################################################################################
-void StockProcessor :: getBuyPrice(string BuyStatus){
+bool StockProcessor :: getBuyPrice(string BuyStatus){
     //This function will print Buy order status, depending on whether the order was processed immediately or added to the buy queue.
 
     if(BuyStatus == "PASS"){
         cout<<"Buy Order Quantity of: "<< stock_buy_quatity << " for ticker: " << stock_ticker <<  " at: $"<< stock_buy_price << " was successfully processed."
         <<endl;
+
+        return true;
     }
     else{
        cout<<"Buy Price does not match market"<<endl; 
        cout<<"Buy Order Quantity of: "<< stock_buy_quatity << " for ticker: " << stock_ticker << " at: $"<< stock_buy_price << " has been added to the buy queue."
        <<endl;
+
+        return false;
     }
 
 }

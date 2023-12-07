@@ -1,6 +1,7 @@
 #include <iostream>
 //#include <pybind11/pybind11.h>
-#include "stockProcessor.cpp"
+#include "buysellExecution/stockProcessor.cpp"
+#include "Queuing/Queuingbuy_sell.cpp"
 
 using namespace std;
 
@@ -11,8 +12,17 @@ int main(){
     //float price1 = price;
 
     StockProcessor processor("aapl", 100.00);
-    processor.setBuyPrice(200.98, 200);
-    processor.setSellPrice(150.56, 100);
+    bool passOrNopass = processor.setBuyPrice(96.78, 200, "");
+
+    if(passOrNopass == 0){
+         Queues q("aapl", 100.00);
+         q.AddBuySideQueue(100.00, 96.78);
+    }
+
+    
+
+    
+
 
 return 0;}
 

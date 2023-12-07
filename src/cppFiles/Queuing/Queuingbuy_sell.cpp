@@ -6,14 +6,22 @@
 
 using namespace std;
 
-void Queues :: AddBuySideQueue(float CurrentPrice){
-    BuySideQueue[stock_ticker] = {stock_buy_price, CurrentPrice};
-    CheckBuyPriceMatch(CurrentPrice);
+Queues :: Queues(string stock_ticker, float stock_current_price) : StockProcessor(stock_ticker, stock_current_price){
+   cout << "Calling constructor from queue class"<<endl; 
+}
+
+
+//#################################################################################################################################################################
+
+void Queues :: AddBuySideQueue(float CurrentPrice, float buyOrderPrice){
+    BuySideQueue[stock_ticker] = make_pair(stock_buy_price, CurrentPrice);
+    cout<<"Added " << stock_ticker << " for : $" << buyOrderPrice << " to the buy queue."<<endl;
+    //CheckBuyPriceMatch(CurrentPrice);
 }
 
 //#################################################################################################################################################################
 void Queues :: AddSellSideQueue(float CurrentPrice){
-     SellSideQueue[stock_ticker] = {stock_sell_price, CurrentPrice};
+     SellSideQueue[stock_ticker] = make_pair(stock_sell_price, CurrentPrice);
      CheckSellPriceMatch(CurrentPrice);
 }
 

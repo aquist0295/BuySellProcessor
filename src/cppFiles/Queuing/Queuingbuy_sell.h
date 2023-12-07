@@ -9,11 +9,12 @@ using namespace std;
 
 class Queues : public StockProcessor{
     private:
-    map<string, pair<float, float>> BuySideQueue;
-    map<string, pair<float, float>> SellSideQueue;
+    map<string, pair<float, float> > BuySideQueue;
+    map<string, pair<float, float> > SellSideQueue;
 
     public:
-    void AddBuySideQueue(float);
+    Queues(string, float);
+    void AddBuySideQueue(float, float);
     void AddSellSideQueue(float);
     void CheckBuyPriceMatch(float);
     void CheckSellPriceMatch(float);
