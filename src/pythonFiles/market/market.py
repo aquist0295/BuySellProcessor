@@ -53,3 +53,6 @@ class Market:
     else:
         print("Error: Quote API service error")
 
+
+
+
