@@ -8,26 +8,27 @@ using namespace std;
 
 Queues :: Queues(string stock_ticker, float stock_current_price) : StockProcessor(stock_ticker, stock_current_price){
    cout << "Calling constructor from queue class"<<endl; 
+   this->CurrentPrice = stock_current_price;
 }
 
 
 //#################################################################################################################################################################
 
-void Queues :: AddBuySideQueue(float CurrentPrice, float buyOrderPrice){
+void Queues :: AddBuySideQueue(float buyOrderPrice){
     BuySideQueue[stock_ticker] = make_pair(stock_buy_price, CurrentPrice);
     cout<<"Added " << stock_ticker << " for : $" << buyOrderPrice << " to the buy queue."<<endl;
-    //CheckBuyPriceMatch(CurrentPrice);
+    //CheckBuyPriceMatch();
 }
 
 //#################################################################################################################################################################
-void Queues :: AddSellSideQueue(float CurrentPrice){
+void Queues :: AddSellSideQueue(){
      SellSideQueue[stock_ticker] = make_pair(stock_sell_price, CurrentPrice);
-     CheckSellPriceMatch(CurrentPrice);
+     CheckSellPriceMatch();
 }
 
 //#################################################################################################################################################################
 //The next 2 function should be executed as threads with parrallelism in the main program(NB: I will add that feature soon)
-void Queues :: CheckBuyPriceMatch(float CurrentPrice){
+void Queues :: CheckBuyPriceMatch(){
     float previousPrice  = CurrentPrice;
     float buy_price      = stock_buy_price;
     float buy_quantity   = stock_buy_quatity;
@@ -48,7 +49,7 @@ void Queues :: CheckBuyPriceMatch(float CurrentPrice){
 
 //#################################################################################################################################################################
 
-void Queues :: CheckSellPriceMatch(float CurrentPrice){
+void Queues :: CheckSellPriceMatch(){
     float previousPrice = CurrentPrice;
     float sell_price    = stock_sell_price;
     float sell_quantity = stock_sell_quatity;

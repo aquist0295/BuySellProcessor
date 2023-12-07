@@ -13,11 +13,12 @@ class Queues : public StockProcessor{
     map<string, pair<float, float> > SellSideQueue;
 
     public:
+    float CurrentPrice;
     Queues(string, float);
-    void AddBuySideQueue(float, float);
-    void AddSellSideQueue(float);
-    void CheckBuyPriceMatch(float);
-    void CheckSellPriceMatch(float);
+    void AddBuySideQueue(float);
+    void AddSellSideQueue();
+    void CheckBuyPriceMatch();
+    void CheckSellPriceMatch();
 
     
 };
