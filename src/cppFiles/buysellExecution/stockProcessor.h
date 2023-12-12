@@ -3,30 +3,23 @@
 #include <string>
 #include <map>
 #include <utility>
-#include <thread>
+#include "../base_class/StockInformation.h"
 
 using namespace std;
 
 class StockProcessor{
-    private:
-    map<string,pair <float,float> >Stock_Buy_Activity;
-    map<string,pair <float,float> >Stock_Sell_Activity;
-
     public:
-    string stock_ticker;
-    float stock_current_price;
     float stock_buy_price;
-    float stock_sell_price;
     float stock_buy_quatity;
+    float stock_sell_price;
     float stock_sell_quatity;
+    StockInformation *st;
 
-    //constructor
-   StockProcessor(string, float);
-
-   template <typename T, typename S> bool setBuyPrice(T , S, string);
-   template <typename T, typename S> void setSellPrice(T, S, string);
-   bool getBuyPrice(string);
-   void getSellPrice(string);
+    StockProcessor(StockInformation *st);
+    template <typename T, typename S> bool setBuyPrice(T , S);
+    template <typename T, typename S> bool setSellPrice(T, S);
+    bool getBuyPrice(string);
+    bool getSellPrice(string);
 };
 
 #endif 
