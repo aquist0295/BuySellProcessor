@@ -13,7 +13,7 @@ StockInformation :: StockInformation(string stock_ticker, float stock_current_pr
 
 //#################################################################################################################################################################
 StockInformation :: StockInformation(){
-    cout<< "starting Processor..." <<endl; 
+    cout<< "...If you are here, you initialized the wrong constructor" <<endl; 
 }
 
 //#################################################################################################################################################################

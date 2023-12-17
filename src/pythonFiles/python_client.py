@@ -42,6 +42,7 @@ def oauth():
 def main_menu(session, base_url):
     mkt = Market(session, base_url)
     mkt.quotes()
+
        
 
 if __name__ == "__main__":

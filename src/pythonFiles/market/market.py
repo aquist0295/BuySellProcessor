@@ -1,5 +1,5 @@
 import json
-import Processor
+import Processor as p
 from datetime import datetime
 
 
@@ -9,21 +9,21 @@ class Market:
     self.base_url = base_url
 
  def quotes(self):
-
+    
     symbols = input("\nPlease enter Stock Symbol: ")
 
     # URL for the API endpoint
     url = self.base_url + "/v1/market/quote/" + symbols + ".json"
+
+    # Make API call for GET request
+    response = self.session.get(url)
 
     # Get the current time
     Hour    = int(datetime.now().strftime("%H"))
 
     #set previous price of stock to arbitrary variable at this time
     old_price  = float(0.0)
-    ticker     = ""
-
-    # Make API call for GET request
-    response = self.session.get(url)
+    ticker     = "" 
 
     if response is not None and response.status_code == 200:
         while Hour >= 9 and Hour <= 16:
@@ -36,8 +36,13 @@ class Market:
                     if quote is not None and "All" in quote and "lastTrade" in quote["All"]:   
                         new_price = quote["All"]["lastTrade"]
                         if new_price != old_price:
+                                #call a function to updated and check that ticker's price in the queue table in c++
+                                #Processor.queue(new_price)
+                                #print(1)
                             #call function to send ticker and price to cpp class for processing
-                            Processor.print(ticker,new_price)
+                            print("ticker: " + ticker)
+                            print("Current Price: " + str(new_price))
+                            p.GetStockinfo(ticker, new_price)
                             old_price = new_price
                 response = self.session.get(url)                
             else:
