@@ -3,7 +3,6 @@
 #include <map>
 #include <utility>
 #include "stockProcessor.h"
-#include "../base_class/StockInformation.h"
 
 using namespace std;
 
@@ -59,7 +58,7 @@ template <typename T, typename S> bool StockProcessor :: setSellPrice(T stock_se
 bool StockProcessor :: getBuyPrice(string BuyStatus){
     //This function will print Buy order status, depending on whether the order was processed immediately or added to the buy queue.
     if(BuyStatus == "PASS"){
-        cout<<"Buy Order Quantity of: "<< stock_buy_quatity << " for ticker: " << st->stock_ticker <<  " at: $"<< stock_buy_price << " was successfully processed."
+        cout<<"Buy Order Quantity of: "<< this->stock_buy_quatity << " for ticker: " << st->stock_ticker <<  " at: $"<< this->stock_buy_price << " was successfully processed."
         <<endl;
         return true;
     }

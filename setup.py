@@ -127,7 +127,7 @@ class CMakeBuild(build_ext):
 # logic and declaration, and simpler if you include description/version in a file.
 setup(
     name="Processor",
-    version="0.0.1",
+    version="0.0.2",
     author="Anthony Quist",
     author_email="aquist@rocketmail.com",
     description="Processor program for stock buy/sell",
@@ -138,3 +138,4 @@ setup(
     #extras_require={"test": ["pytest>=6.0"]},
     python_requires=">=3.7",
 )
+

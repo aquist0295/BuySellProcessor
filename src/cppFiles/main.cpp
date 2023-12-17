@@ -1,52 +1,35 @@
 #include <iostream>
 #include <thread>
-//#include <pybind11/pybind11.h>
+#include <utility>
+#include <pybind11/pybind11.h>
 #include "base_class/StockInformation.cpp"
 #include "buysellExecution/stockProcessor.cpp"
 #include "Queuing/Queuingbuy_sell.cpp"
 
 using namespace std;
 
-//namespace py = pybind11;
+namespace py = pybind11;
 
-//Will be using pybind to get the actual price of a stock in function here
+//This function wiil be called as a pybind11 module which will retrieve prices from the market python script and commence processing
+void GetStockinfo(string ticker, float price){
+StockInformation st(ticker, price);
+
 /*
-template <typename F> float GetStockinfo(F price){
-    if(price){
-        return price;
-    }
-    
-    GetStockinfo(price);
+string transactionType = "";
+cout<<"Would you like to buy or sell said ticker? Please enter b for BUY and s for SELL: "<<endl;
+cin>>transactionType;
+
+if(transactionType = "b"){
+
+}
+
+else{
+
 }
 */
 
-int main(){    
-//cout<<"Welcome to this program"<<endl;
+float buyPrice = 200, buyQuantity = 100;
 
-string ticker = "aapl";
-
-//cout<<"Please enter ticker symbol: ";
-//cin >> ticker;
-
-//call pybind11 function here(GetStockiinfo) to get the current price
-//float curr_price = 0.0;
-//float curr_price = GetStockinfo(curr_price)
-float curr_price = 100;
-
-//instantiate stockinformation class here
-//StockInformation(ticker, curr_price);
-
-float buyPrice = 90, buyQuantity = 100;
-/*
-cout<<"Please enter buy price: ";
-cin>>buyPrice;
-cout<<"Please enter buy Quantity: ";
-cin>>buyQuantity;
-*/
-
-StockInformation st(ticker, curr_price);
-
-//instantiate stockProcessor class here
 StockProcessor P(&st);
 
 bool check = P.setBuyPrice(buyPrice, buyQuantity);
@@ -59,14 +42,13 @@ if(!check){
     //q.CheckBuyPriceMatch(buyprice, buyQuantity); //this is where you start a new thread for each value added to the queue
 }
 
+}
 
-return 0;}
 
-
-/*
+//pybind11 module for market script(Processor)
 PYBIND11_MODULE(Processor, m) {
     m.doc() = "testin pybind with testpybind code";
 
-    m.def("print", &print, "A function that prints");
+    m.def("GetStockinfo", &GetStockinfo, "A function to retrieve stock information");
 }
-*/
+

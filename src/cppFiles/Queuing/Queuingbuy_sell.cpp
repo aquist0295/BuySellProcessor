@@ -1,7 +1,6 @@
 #include <iostream>
 #include <map>
 #include <utility>
-//#include "../base_class/StockInformation.h"
 #include "Queuingbuy_sell.h"
 
 using namespace std;
