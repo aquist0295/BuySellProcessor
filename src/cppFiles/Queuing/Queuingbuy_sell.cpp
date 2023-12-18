@@ -22,7 +22,7 @@ void Queues :: AddSellSideQueue(float stock_sell_price){
 }
 
 //#################################################################################################################################################################
-//The next 2 function should be executed as threads with parrallelism in the main program(NB: I will add that feature soon)
+//The next 2 function should be executed as threads with concurrency in the main program(NB: I will add that feature soon)
 void Queues :: CheckBuyPriceMatch(float stock_buy_price, float stock_buy_qty){
     float previousPrice  = st->stock_current_price;
     float buy_price      = stock_buy_price;
