@@ -35,8 +35,6 @@ void Queues :: CheckBuyPriceMatch(float stock_buy_price, float stock_buy_qty){
 
                 //remove the entry from the buyside hashtable
                 st->Delete_BuySideQueue();
-       
-                //end thread and break
                 
                 break; //exit the while loop
             }
