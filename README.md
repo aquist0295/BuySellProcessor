@@ -45,6 +45,11 @@ DEPENDENCIES:
 EXECUTION:
 1. run <pip install ./<project name> in the topmost directory => This will build a library that you can now use in your Python scripts to expose cpp functionality in Python.
 
+TESTING CPP CODE W/O Python scripts(This is only for testing purposes)
+1. cd <src/cppFiles/main> in terminal
+2. run <g++ -std=c++11 -o main.exe main.cpp> (This will compile, link, and create an executable file called main.exe in the current directory)
+3. Execute the main.exe file by running ./main.exe
+
 
     
 
