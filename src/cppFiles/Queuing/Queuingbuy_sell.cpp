@@ -15,8 +15,8 @@ void QueueOrders :: AddToBuyQueue() {
     BuyQueue[live_stock_ticker] = std::make_pair(stock_buy_price, live_stock_price);
     std::cout<<"Buy Order for ticker: " << live_stock_ticker << " at: $"<< stock_buy_price << " has been added to the buy queue."<<std::endl;
 
-    //call CheckBuyPriceMatch to create a thread for this order.
-    CheckBuyPriceMatch();
+    //call CheckBuyPriceMatch to create a thread for this order(this will be called as a thread)
+    CheckBuyPriceMatch(BuyQueue[live_stock_ticker].first, stock_buy_quatity, BuyQueue[live_stock_ticker].second);
 }
 
 
@@ -25,52 +25,25 @@ void QueueOrders :: AddToSellQueue () {
      SellQueue[live_stock_ticker] = std::make_pair(stock_sell_price, live_stock_price);
      std::cout<<"Sell Order for ticker: " << live_stock_ticker << " at: $"<< stock_sell_price << " has been added to the sell queue."<<std::endl;
 
-    //call CheckSellPriceMatch to create a thread for this order.
-    CheckSellPriceMatch();  
+    //call CheckSellPriceMatch to create a thread for this order.(this will be called as a thread)
+    CheckSellPriceMatch(SellQueue[live_stock_ticker].first, stock_sell_quatity, SellQueue[live_stock_ticker].second);  
 }
 
 
-//
-void QueueOrders:: CheckBuyPriceMatch () {
-    float previousPrice  = st->stock_current_price;
-    float buy_price      = stock_buy_price;
-    float buy_qty        = stock_buy_qty;
-
-    while (true){ //could change this condition to time
-        if (st->stock_current_price != previousPrice) {
-            if (st->stock_current_price == buy_price) {
-                //execute Trade if currentPrice from the api is equal to User's Buy price
-                st->Update_Stock_Buy_Activity(buy_price, buy_qty);
-
-                //remove the entry from the buyside hashtable
-                st->Delete_BuySideQueue();
-                
-                break; //exit the while loop
-            }
-            previousPrice = st->stock_current_price;
-        }
+// This function will check to see if the desired buy price matches the live price of the security(to do: expose this function to python for live price updates).
+void QueueOrders:: CheckBuyPriceMatch (float buyPrice, float buyQuantity, float currentPrice) {
+    //execute a buy if the currentPrice passed from: (insert python script here) is equal to the buyPrice(desired price from the user)
+    if (currentPrice == buyPrice) {
+        executeBuy(buyPrice, buyQuantity);
     }
+
 }
 
-
-void QueueOrders :: CheckSellPriceMatch () {
-    float previousPrice  = st->stock_current_price;
-    float sell_price      = stock_sell_price;
-    float sell_qty        = stock_sell_qty;
-
-    while (true) { //could change this condition to time
-        if (st->stock_current_price != previousPrice) {
-            if (st->stock_current_price == sell_price) {
-                //execute Trade if currentPrice from the api is equal to User's Buy price
-                st->Update_Stock_Sell_Activity(sell_price, sell_qty);
-
-                //remove the entry from the buyside hashtable
-                st->Delete_BuySideQueue();
-                
-                break; //exit the while loop
-            }
-            previousPrice = st->stock_current_price;
-        }
+// This function will check to see if the desired buy price matches the live price of the security(to do: expose this function to python for live price updates).
+void QueueOrders :: CheckSellPriceMatch (float sellPrice, float sellQuantity, float currentPrice) {
+    //execute a sell if the currentPrice passed from: (insert python script here) is equal to the sellPrice(desired price from the user)
+    if (currentPrice == sellPrice) {
+        executeBuy(sellPrice, sellQuantity);
     }
 }
 
