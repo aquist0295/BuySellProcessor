@@ -1,81 +1,79 @@
+/*
+###########################################################################################################################################
+The stockProcessor class is responsible for processing both buy and sell order.
+The constructor which is responsible for initializting the live stock price and live stock ticker passed from GetStockinfo.
+All other functions are responsible for executing either buys or sells based on user inputs from main.cpp.
+###########################################################################################################################################
+*/
+
 #include <iostream>
 #include <string>
 #include <map>
 #include <utility>
 #include "stockProcessor.h"
 
-using namespace std;
-
-StockProcessor :: StockProcessor(StockInformation* st){
-    this->st = st;
+// A constructor to initialize the current stock price and ticker symbol. This is initialized from main.cpp(GetStockinfo function).
+StockProcessor :: StockProcessor(std:: string live_stock_ticker, float live_stock_price) {
+    this->live_stock_ticker = live_stock_ticker;
+    this->live_stock_price  = live_stock_price;
 }
 
-//#################################################################################################################################################################
-template <typename T, typename S> bool StockProcessor :: setBuyPrice(T stock_buy_price, S stock_buy_quatity){
-   /*
-     This function will process buy orders. If the BuyOrderPrice and BuyOrderQty match the current stock price, the order will be processed and added to
-     the Stock_Buy_Activity table. Otherwise, the buy order will be added to the Buy_Order_queue for processing later.   
-   */
+/*
+ An executeBuy template function which is responsible for executing buy orders by verifying the users desired price(stock_buy_price) is
+ greater than or equal to the live price of the security.
+ If this condition is true, the order will be executed by adding it to the buy_sell_Activity table for our records, otherwise return false;
+*/
+template <typename T, typename S> bool StockProcessor :: executeBuy (T stock_buy_price, S stock_buy_quatity) {
     this->stock_buy_price   = stock_buy_price;
     this->stock_buy_quatity = stock_buy_quatity;
 
-    if(stock_buy_price >= st->stock_current_price){
-        st->Update_Stock_Buy_Activity(stock_buy_price, stock_buy_quatity);
-        return getBuyPrice("PASS");
+    // Execute buy by recording the order transaction in the buy_sell_Activity table.
+    if (stock_buy_price >= live_stock_price) {
+        buy_sell_Activity[live_stock_ticker] = std::make_pair("BUY", live_stock_price);
+        buyConfirmation();
+        return true;
     }
-   
-    else{ 
-        return getBuyPrice("NO PASS");
-    }
+
+    // return false if order is unsuccessful
+    return false;
 }
 
-//#################################################################################################################################################################
-template <typename T, typename S> bool StockProcessor :: setSellPrice(T stock_sell_price, S stock_sell_quatity){
-    /*
-     This function will process Sell orders. If the SellOrderPrice and SellOrderQty match the current stock price, the order will be processed and added to
-     the Stock_Sell_Activity table. Otherwise, the Sell order will be added to the Sell_Order_queue for processing later.
-    */   
-        //validate that the ticker has been purchased and the stock_sell_quantity does not exceed the buy quantity
-        bool ValidateOrder = st->ValidateSellInfo(st->stock_ticker, stock_sell_quatity);
+/*
+ An executeSell template function which is responsible for executing sell orders by verifying the users desired price(stock_sell_price) is
+ less than or equal to the live price of the security.
+ If this condition is true, the order will be executed by adding it to the buy_sell_Activity table for our records, otherwise return false;
+*/
+template <typename T, typename S> bool StockProcessor :: executeSell (T stock_sell_price, S stock_sell_quatity) { 
+    //validate that the ticker has been purchased and the stock_sell_quantity does not exceed the buy quantity.
+    if (buy_sell_Activity.count(live_stock_price) == 0) {
+        return false;
+    }
 
-        if(!ValidateOrder){
-            return false;
-        }
+    //Ensure that the desired sell quantity does not exceed owned quatity of the ticker.
+
+    this->stock_sell_price    = stock_sell_price;
+    this->stock_sell_quatity  = stock_sell_quatity;
+    
+    if (stock_sell_price <= live_stock_price) {
+        buy_sell_Activity[live_stock_ticker] = std::make_pair("SELL", live_stock_price);
+        return getSellPrice();
+        return true;
+    }
         
-        this->stock_sell_price    = stock_sell_price;
-        this->stock_sell_quatity  = stock_sell_quatity;
-    
-        if(stock_sell_price <= st->stock_current_price){
-            st->Update_Stock_Sell_Activity(stock_sell_price, stock_sell_quatity);
-            return getSellPrice("PASS");
-        }
-        else{
-            return getSellPrice("NO PASS");
-        }
-}
-
-//#################################################################################################################################################################
-bool StockProcessor :: getBuyPrice(string BuyStatus){
-    //This function will print Buy order status, depending on whether the order was processed immediately or added to the buy queue.
-    if(BuyStatus == "PASS"){
-        cout<<"Buy Order Quantity of: "<< this->stock_buy_quatity << " for ticker: " << st->stock_ticker <<  " at: $"<< this->stock_buy_price << " was successfully processed."
-        <<endl;
-        return true;
-    }
-
+    // return false if order is unsuccessful
     return false;
 }
 
-//#################################################################################################################################################################
-bool StockProcessor :: getSellPrice(string SellStatus){
-    //This function will print Sell order status, depending on whether the order was processed immediately or added to the Sell queue.
+//This function will print Buy order status, depending on whether the order was processed immediately or added to the buy queue.
+void StockProcessor :: buyConfirmation () {
+    std::cout<<"Buy Order Quantity of: "<< stock_buy_quatity << " for ticker: " << live_stock_ticker <<  " at: $"<< stock_buy_price << " was successfully processed."
+    <<std::endl;
+}
 
-    if(SellStatus == "PASS"){
-        cout<<"Sell Order Quantity of: "<< stock_sell_quatity << " for ticker: " << st->stock_ticker <<  " at: $"<< stock_sell_price << " was successfully processed."
-        <<endl;
-        return true;
-    }
-    
-    return false;
+
+//This function will print Sell order status, depending on whether the order was processed immediately or added to the Sell queue.
+void StockProcessor :: sellConfirmation() {
+    std::cout<<"Sell Order Quantity of: "<< stock_sell_quatity << " for ticker: " << live_stock_ticker <<  " at: $"<< stock_sell_price << " was successfully processed."
+    <<std::endl;
 }
 

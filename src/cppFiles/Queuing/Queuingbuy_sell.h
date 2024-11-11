@@ -1,21 +1,29 @@
-#ifndef QUEUINGBUY_SELL_H
-#define QUEUINGBUY_SELL_H
+/*
+###########################################################################################################################################
+QueueOrders.h contains definitions for functions and variables that will define how orders are processed if they are unable to meet buy and
+sel conditions. See QueueOrders.cpp for more information.
+QueueOrders inherits StockProcessor. This allows QueueOrders to access variables and functions in StockProcessor. 
+###########################################################################################################################################
+*/
+
+
+#ifndef QUEUEORDERS_H
+#define QUEUEORDERS_H
 #include <map>
 #include <utility>
-#include "../base_class/StockInformation.h"
+#include <string>
+#include "../buysellExecution/stockProcessor.cpp"
 
-using namespace std;
-
-class Queues{
+class QueueOrders : public StockProcessor {
     public:
-    StockInformation *st;
-    Queues(StockInformation *st);
-    void AddBuySideQueue(float);
-    void AddSellSideQueue(float);
-    void CheckBuyPriceMatch(float, float);
-    void CheckSellPriceMatch(float, float);
+    std::map<std::string, std::pair<float, float>> BuyQueue;
+    std::map<std::string, std::pair<float, float>> SellQueue;
 
-    
+    QueueOrders();
+    void AddToBuyQueue();
+    void AddToSellQueue();
+    void CheckBuyPriceMatch();
+    void CheckSellPriceMatch();
 };
 
-#endif
+#endif //QUEUEORDERS_H
