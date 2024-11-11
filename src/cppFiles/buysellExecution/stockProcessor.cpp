@@ -1,8 +1,8 @@
 /*
 ###########################################################################################################################################
-The stockProcessor class is responsible for processing both buy and sell order.
-The constructor which is responsible for initializting the live stock price and live stock ticker passed from GetStockinfo.
-All other functions are responsible for executing either buys or sells based on user inputs from main.cpp.
+The stockProcessor class is responsible for processing buy and sell orders.
+The constructor is responsible for initializing live_stock_price and live_stock_ticker variables which were passed from GetStockinfo.
+All other functions are responsible for executing either buys or sells based on user inputs from: /src/cppFiles/main.cpp.
 ###########################################################################################################################################
 */
 
@@ -12,7 +12,7 @@ All other functions are responsible for executing either buys or sells based on 
 #include <utility>
 #include "stockProcessor.h"
 
-// A constructor to initialize the current stock price and ticker symbol. This is initialized from main.cpp(GetStockinfo function).
+// A constructor to initialize the current stock price and ticker symbol.
 StockProcessor :: StockProcessor(std:: string live_stock_ticker, float live_stock_price) {
     this->live_stock_ticker = live_stock_ticker;
     this->live_stock_price  = live_stock_price;
@@ -21,7 +21,7 @@ StockProcessor :: StockProcessor(std:: string live_stock_ticker, float live_stoc
 /*
  An executeBuy template function which is responsible for executing buy orders by verifying the users desired price(stock_buy_price) is
  greater than or equal to the live price of the security.
- If this condition is true, the order will be executed by adding it to the buy_sell_Activity table for our records, otherwise return false;
+ If this condition is true, the order will be executed by adding it to the buy_sell_Activity table for our records, otherwise return false.
 */
 template <typename T, typename S> bool StockProcessor :: executeBuy (T stock_buy_price, S stock_buy_quatity) {
     this->stock_buy_price   = stock_buy_price;
@@ -29,7 +29,7 @@ template <typename T, typename S> bool StockProcessor :: executeBuy (T stock_buy
 
     // Execute buy by recording the order transaction in the buy_sell_Activity table.
     if (stock_buy_price >= live_stock_price) {
-        buy_sell_Activity[live_stock_ticker] = std::make_pair("BUY", live_stock_price);
+        buy_sell_Activity[live_stock_ticker] = std::make_pair("BUY", std::make_pair(stock_buy_price, stock_buy_quatity));
         buyConfirmation();
         return true;
     }
@@ -55,7 +55,7 @@ template <typename T, typename S> bool StockProcessor :: executeSell (T stock_se
     this->stock_sell_quatity  = stock_sell_quatity;
     
     if (stock_sell_price <= live_stock_price) {
-        buy_sell_Activity[live_stock_ticker] = std::make_pair("SELL", live_stock_price);
+        buy_sell_Activity[live_stock_ticker] = std::make_pair("SELL", std::make_pair(stock_sell_price, stock_sell_quatity));
         return getSellPrice();
         return true;
     }
