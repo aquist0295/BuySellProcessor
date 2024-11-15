@@ -17,8 +17,8 @@ QueueOrders inherits StockProcessor. This allows QueueOrders to access variables
 //QueueOrders class is a child of StockProcessor, this is achieved through inheritance
 class QueueOrders : public StockProcessor {
     public:
-    std::map<std::string, std::pair<float, float>> BuyQueue;
-    std::map<std::string, std::pair<float, float>> SellQueue;
+    std::map<std::string, std::pair<float,float>> BuyQueue;
+    std::map<std::string, std::pair<float,float>> SellQueue;
 
     QueueOrders();
     void AddToBuyQueue();

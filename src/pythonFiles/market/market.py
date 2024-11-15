@@ -1,5 +1,14 @@
+'''
+NB: This python script is owned and distributed by E*trade, some modifications have been made by me to tailor this script to my use case.
+This script accepts user input for stock symbol(ticker) information from the user.
+It will then send a GET request to an E*trade API endpoint to retrieve that ticker information.
+The response is then filtered for relevant information i.e price of the security in question.
+The filtered information is then passed to the exposed c++ function(GetStockinfo) using the pybind11 binary module(Processor).
+'''
+
 import json
-import Processor as p
+# declare the pybind11 binary module which will expose c++ code(GetStockinfo) from: /src/cppFiles/buysellExecution
+import Processor as p 
 from datetime import datetime
 
 
@@ -9,23 +18,25 @@ class Market:
     self.base_url = base_url
 
  def quotes(self):
-    
+    # Get user input for ticker/symbol
     symbols = input("\nPlease enter Stock Symbol: ")
 
-    # URL for the API endpoint
+    # URI for the API endpoint
     url = self.base_url + "/v1/market/quote/" + symbols + ".json"
 
     # Make API call for GET request
     response = self.session.get(url)
 
-    # Get the current time
+    # Get the current time 
     Hour    = int(datetime.now().strftime("%H"))
 
-    #set previous price of stock to arbitrary variable at this time
-    old_price  = float(0.0)
+    # set previous price of stock to arbitrary variable at this time and set ticker information to an empty string
+    previous_price  = float(0.0)
     ticker     = "" 
 
+    # Filter response from API GET request from line 28 above
     if response is not None and response.status_code == 200:
+    # Only execute this request if hour is between 9am and 4pm EST i.e these are the trading times for the US securities market    
         while Hour >= 9 and Hour <= 16:
             #print("")
             data = response.json()
@@ -34,19 +45,20 @@ class Market:
                     if quote is not None and "Product" in quote and "symbol" in quote["Product"]:
                         ticker = quote["Product"]["symbol"]
                     if quote is not None and "All" in quote and "lastTrade" in quote["All"]:   
-                        new_price = quote["All"]["lastTrade"]
-                        if new_price != old_price:
-                                #call a function to updated and check that ticker's price in the queue table in c++
-                                #Processor.queue(new_price)
-                                #print(1)
+                        current_price = quote["All"]["lastTrade"]
+                        #update the price of the security if it changes
+                        if current_price != previous_price:
                             #call function to send ticker and price to cpp class for processing
+                            #print below to verify that right information is being passed to the the c++ program(this is for debugging purposes only)
                             print("ticker: " + ticker)
-                            print("Current Price: " + str(new_price))
-                            p.GetStockinfo(ticker, new_price)
-                            old_price = new_price
+                            print("Current Price: " + str(current_price))
+                            # CPP function(GetStockinfo) called from: /src/cppFiles/buysellExecution/stockProcessor.cpp. This will pass the ticker and price to GetStockinfo
+                            p.GetStockinfo(ticker, current_price)
+                            #update the old price as the current price
+                            previous_price = current_price
                 response = self.session.get(url)                
             else:
-                # Handle errors
+                # Handle errors if response was unable to GET the information from the API endpoint
                 if data is not None and 'QuoteResponse' in data and 'Messages' in data["QuoteResponse"] \
                          and 'Message' in data["QuoteResponse"]["Messages"] \
                          and data["QuoteResponse"]["Messages"]["Message"] is not None:

@@ -20,7 +20,7 @@ class StockProcessor {
     float stock_buy_quatity;
     float stock_sell_price;
     float stock_sell_quatity;
-    // This data structure will hold all buy and sell orders that have successfully been executed.
+    // This data structure will hold all buy and sell orders which have been successfully executed.
     std::map<std::string, std::pair<std:: string, std::pair<float,float>>> buy_sell_Activity;
 
     StockProcessor(std::string, float);
