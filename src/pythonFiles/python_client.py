@@ -1,12 +1,20 @@
+'''
+NB: This python script is owned and distributed by E*trade, some modifications have been made by me to tailor this script to my use case.
+This script auithenticates user credenials using oauth1.
+User credentials are passed to the script from  config.ini.
+Once authentication is successful a base_url and a session is generated using the user credentials.
+main_menu() is then executed with the base_url and session information and the market script is called, refer to: /src/pythonFiles/market/market.py
+'''
+
 from __future__ import print_function
 import webbrowser
 import configparser
 from rauth import OAuth1Service
-#from accounts.accounts import Accounts
 from market.market import Market
 
 # loading configuration file
 config = configparser.ConfigParser()
+# refer to .gitignore for this file. This file contains keys for authentication. NB Each user should have unique keys 
 config.read('config.ini')
 
 def oauth():
@@ -38,12 +46,12 @@ def oauth():
 
     main_menu(session, base_url)
 
-
+# main_menu will instantiate the Market class from: /src/pythonFiles/market/market.py and pass session and base_url information to mkt.quotes
 def main_menu(session, base_url):
     mkt = Market(session, base_url)
     mkt.quotes()
 
        
-
+# main function which calls oauth() to begin executing the script
 if __name__ == "__main__":
     oauth()
