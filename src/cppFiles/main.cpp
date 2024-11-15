@@ -27,30 +27,30 @@ namespace py = pybind11;
  ticker and price of a security.
  Refer to the pybind11 module: PYBIND11_MODULE(Processor, m) at the bottom to see where it is defined for python binding.
 */
-void GetStockinfo (string ticker, float price) {
+void GetStockinfo (std::string ticker, float price) {
 // Initialize variables to capture user inputs   
-    std::float  buyPrice     = 0.0;
-    std::float  buyQuantity  = 0.0;
-    std::float  sellPrice    = 0.0;
-    std::float  sellQuantity = 0.0;
+    float  buyPrice     = 0.0;
+    float  buyQuantity  = 0.0;
+    float  sellPrice    = 0.0;
+    float  sellQuantity = 0.0;
     std::string transactionType = "";
 
 // Capture user input for either buy or sell of security
-    cout<<"Would you like to buy or sell this security?"<<endl;
-    cin>>transactionType;
+    std::cout<<"Would you like to buy or sell this security?"<<std::endl;
+    std::cin>>transactionType;
 
 // Based on user input(transactionType) execute buy or sell security
     if (transactionType == "buy") {
-        cout<<"Enter Buy Price:"<<endl;
-        cin>>buyPrice;
-        cout<<"Enter Buy Quantity:"<<endl;
-        cin>>buyQuantity;
+        std::cout<<"Enter Buy Price:"<<std::endl;
+        std::cin>>buyPrice;
+        std::cout<<"Enter Buy Quantity:"<<std::endl;
+        std::cin>>buyQuantity;
     }
     else {
-        cout<<"Enter Sell Price:"<<endl;
-        cin>>sellPrice;
-        cout<<"Enter Sell Quantity:"<<endl;
-        cin>>sellQuantity;
+        std::cout<<"Enter Sell Price:"<<std::endl;
+        std::cin>>sellPrice;
+        std::cout<<"Enter Sell Quantity:"<<std::endl;
+        std::cin>>sellQuantity;
     }
 
 /*
