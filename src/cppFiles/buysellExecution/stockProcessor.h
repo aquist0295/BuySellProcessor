@@ -14,16 +14,17 @@ See stockProcessor.cpp for more information.
 
 class StockProcessor {
     public:
-    std:: string live_stock_ticker;
+    std::string live_stock_ticker;
     float live_stock_price;
     float stock_buy_price;
     float stock_buy_quatity;
     float stock_sell_price;
     float stock_sell_quatity;
     // This data structure will hold all buy and sell orders which have been successfully executed.
-    std::map<std::string, std::pair<std:: string, std::pair<float,float>>> buy_sell_Activity;
+    std::map<std::string, std::pair<std::string, std::pair<float,float> > > buy_sell_Activity;
 
     StockProcessor(std::string, float);
+    StockProcessor();
     template <typename T, typename S> bool executeBuy(T , S);
     template <typename T, typename S> bool executeSell(T, S);
     void buyConfirmation();
