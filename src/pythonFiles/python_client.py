@@ -1,5 +1,5 @@
 '''
-NB: This python script is owned and distributed by E*trade, some modifications have been made by me to tailor this script to my use case.
+NB: This python script is owned and distributed by E*trade, some modifications have been made by the author to tailor this script for my use case.
 This script auithenticates user credenials using oauth1.
 User credentials are passed to the script from  config.ini.
 Once authentication is successful a base_url and a session is generated using the user credentials.
@@ -12,9 +12,9 @@ import configparser
 from rauth import OAuth1Service
 from market.market import Market
 
-# loading configuration file
+#loading configuration file
 config = configparser.ConfigParser()
-# refer to .gitignore for this file. This file contains keys for authentication. NB Each user should have unique keys 
+#refer to .gitignore for this file. This file contains keys for authentication. NB Each user should have unique keys.
 config.read('config.ini')
 
 def oauth():
@@ -31,7 +31,7 @@ def oauth():
     base_url = config["DEFAULT"]["PROD_BASE_URL"]
 
 
-    # Step 1: Get OAuth 1 request token and secret
+    # Step 1: Get OAuth 1 request token and secret.
     request_token, request_token_secret = etrade.get_request_token(params={"oauth_callback": "oob", "format": "json"})
 
     # Step 2: Go through the authentication flow. Login to E*TRADE.
@@ -42,16 +42,15 @@ def oauth():
 
     # Step 3: Exchange the authorized request token for an authenticated OAuth 1 session
     session = etrade.get_auth_session(request_token,request_token_secret,params={"oauth_verifier": text_code})
-    print(str(session))
+    #print(str(session))
 
     main_menu(session, base_url)
 
-# main_menu will instantiate the Market class from: /src/pythonFiles/market/market.py and pass session and base_url information to mkt.quotes
+# main_menu will instantiate the Market class from: /src/pythonFiles/market/market.py and pass session and base_url information to mkt.quotes. 
 def main_menu(session, base_url):
     mkt = Market(session, base_url)
     mkt.quotes()
-
        
-# main function which calls oauth() to begin executing the script
+# main function which calls oauth() to begin executing the script.
 if __name__ == "__main__":
     oauth()
