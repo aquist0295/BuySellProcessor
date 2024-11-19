@@ -46,17 +46,10 @@ class Market:
                         ticker = quote["Product"]["symbol"]
                     if quote is not None and "All" in quote and "lastTrade" in quote["All"]:   
                         current_price = quote["All"]["lastTrade"]
-                        #update the price of the security if it changes
-                        if current_price != previous_price:
-                            #call function to send ticker and price to cpp class for processing
-                            #print below to verify that right information is being passed to the the c++ program(this is for debugging purposes only)
-                            print("ticker: " + ticker)
-                            print("Current Price: " + str(current_price))
-                            # CPP function(GetStockinfo) called from: /src/cppFiles/buysellExecution/stockProcessor.cpp. This will pass the ticker and price to GetStockinfo
-                            p.GetStockinfo(ticker, current_price)
-                            #update the old price as the current price
-                            previous_price = current_price
-                response = self.session.get(url)                
+                        print("ticker: " + ticker)
+                        print("Current Price: " + str(current_price))
+                        #Calling exposed C++ function and passing arguments
+                        p.GetStockinfo(ticker, current_price)                
             else:
                 # Handle errors if response was unable to GET the information from the API endpoint
                 if data is not None and 'QuoteResponse' in data and 'Messages' in data["QuoteResponse"] \
