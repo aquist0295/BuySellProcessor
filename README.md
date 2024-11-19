@@ -57,11 +57,35 @@
   ```
   $ git clone https://github.com/aquist0295/BuySellProcessor
   ```
-* Run from topmost directory, This will create a pybind11 binary module which will be used in Python scripts to expose C++ code and start 
+* Run from top-most directory, This will create a pybind11 binary module which will be used in Python scripts to expose C++ code and start 
   the program 
   ```
-  $ pip install ./Processor  
+  $  cmake .
+  $  make
+  $  mv Processor.cpython-39-darwin.so src/pythonFiles
   ```
 ### USAGE
+  * Run python script
+    ```
+    $ python3 python_client.py
+    ```
+  * Sample output
+ ```
+ /Users/anthonyquist/Documents/python-vms/testing_final_env/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020warnings.warn(
+Please accept agreement and enter verification code from browser: <Enter verification code here>
 
+Please enter Stock Symbol: aapl
+ticker: AAPL
+Current Price: 228.02
+Would you like to buy or sell this security?
+buy
+Enter Buy Price:
+230
+Enter Buy Quantity:
+50
+Buy Order Quantity of: 50 for ticker: AAPL at: $230 was successfully processed.
+ticker: AAPL
+Current Price: 228.02
+
+```   
   
