@@ -1,55 +1,91 @@
-# BuySellProcessor
-This program in C++ and Python uses the pybind11 library to send information(ticker and price info) to the cpp constructor.
+# E*trade REST API(live trading) with Pybind11 for binding with C++ execution engine.
 
-#About
-This program uses the etrade API to authenticate user credentials and request ticker information(ticker symbol and price) in real-time. The program uses this information
-to either trigger a buy or sell depending on the price of the security and the quantity requested.
+## A functional Trade execution sample project, integrating the E*trade REST API to track live security prices using Python and a binding agent(pybind11) to expose C++ code to Python scripts for execution.
 
-#Requirements
-1. Python3
-2. Pip
-3. Pybind11
-4. Cmake
+## This sample project was built as a simple execution engine to showcase the following:
+* How to effectively use REST APIs to GET information from endpoints using Python.
+* How to pass that information to C++ by exposing C++ code to Python using pybind11.
+* How to use OOP concepts effectively: inheritance, encapsulation, classes and objects, etc
+* How to run threads in C++.
+* How to create a Python environment for testing/building purposes.
 
-#Files and directories
-1. pybind11(submodule)
-2. src
-   a. CPP files
-      i. main.cpp
-      ii. base_class: This directory contains the StockInformation header and cpp files, which will initially be called to get the ticker(from the user) & the ticker's price from the
-          API.
-      iii. buysellExecution: This directory contains the StockProcessor header and cpp files, which will execute buys and sells.
-      iv. Queueing: This directory contains the Queuingbuy_sell header and cpp files, which will queue trades that cannot be executed at the current time.
-   
-   b. python files
-      i. Python_client.py: python script for authentication. This script authenticates User Credentials and calls the Market class.
-      ii. market/market.py: python script to get the price information of the current ticker and then using Pybind11, passes that information to the StockInformation class in the                 cppfiles directory.
-   
- 4. CMakeFile.txt: This file helps to compile the cpp code as well as configure the pybind11 submodule.
- 5. setup.py
+## BUILT WITH
+* Python
+* C++
+* Pybind11
+* CMAKE
+* REST API
 
-NB: The API only works with an etrade account(check authentication info and API info in the Python_client.py script), you will need your security token to access the API.
-    It's possible to use your other APIs here. NB: I will be using a different API soon.
-
-HOW TO START THIS PROGRAM
-DEPENDENCIES:
-1. I would recommend using a virtual environment in Python, The link below should help you set up a virtual environment(Ensure Python has been installed and is working properly)
-   LINK: https://medium.com/geekculture/installing-python-3-x-development-environment-on-macos-a64c0141b20c (Scroll down to Install and Create Virtual Environment section)
-
-2. Ensure CMAKE is installed and all its dependencies are installed as well.
-   CMAKE install cmd:
-   MAC: run <brew install cmake> OR download CMAKE directly from the CMAKE website
-
-3. Ensure the PYBIND11 submodule is downloaded. (Refer to my installation for more info and clone if possible OR the official cmake_example project on GitHub)
-
-EXECUTION:
-1. run <pip install ./<project name> in the topmost directory => This will build a library that you can now use in your Python scripts to expose cpp functionality in Python.
-
-TESTING CPP CODE W/O Python scripts(This is only for testing purposes)
-1. cd <src/cppFiles/main> in terminal
-2. run <g++ -std=c++11 -o main.exe main.cpp> (This will compile, link, and create an executable file called main.exe in the current directory)
-3. Execute the main.exe file by running ./main.exe
+## THE DIAGRAM BELOW WILL GIVE YOU A BETTER UNDERSTANDING OF HOW THIS PROGRAM WORKS.
 
 
-    
+## GETTING STARTED
+* This section will describe how to locally build this program. To get a local copy up and running follow these simple steps.
 
+### Prerequisites
+* Python & PIP:
+    * For Mac: Download and install Python from https://www.python.org/downloads/mac verify install by running:
+      ```
+      $ python --version
+      ```              
+    * For Windows: Download and install Python from https://www.python.org/downloads/mac verify install by running:
+       ```
+      $ python --version
+      ```
+       
+* g++ for compiling C++ code:
+    * Ensure that g++ is installed.
+    * For Mac install Xcode(all tools needed to compile c++). For 
+    * For Windows visit:https://code.visualstudio.com/docs/cpp/config-mingw
+
+* CMAKE:
+    * For Mac & Windows visit for more instructions:https://cmake.org/download/
+    * Verify that CMAKE is installed:
+      ```
+      $ cmake --version
+      ```        
+
+### INSTALLATION
+* Create Python virtual environment
+  ```
+  $ pip3 install virtualenv
+  $ mkdir <name of directory>
+  $ python3 -m venv <name of project>
+  $ source project_env/bin/activate
+  ```
+* Clone the repo
+  ```
+  $ git clone https://github.com/aquist0295/BuySellProcessor
+  ```
+* Run from top-most directory, This will create a pybind11 binary module which will be used in Python scripts to expose C++ code and start 
+  the program 
+  ```
+  $  cmake .
+  $  make
+  $  mv Processor.cpython-39-darwin.so src/pythonFiles
+  ```
+### USAGE
+  * Run python script
+    ```
+    $ python3 python_client.py
+    ```
+  * Sample output
+ ```
+ /Users/anthonyquist/Documents/python-vms/testing_final_env/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020warnings.warn(
+Please accept agreement and enter verification code from browser: <Enter verification code here>
+
+Please enter Stock Symbol: aapl
+ticker: AAPL
+Current Price: 228.02
+Would you like to buy or sell this security?
+buy
+Enter Buy Price:
+230
+Enter Buy Quantity:
+50
+Buy Order Quantity of: 50 for ticker: AAPL at: $230 was successfully processed.
+ticker: AAPL
+Current Price: 228.02
+
+```   
+  
