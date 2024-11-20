@@ -16,9 +16,6 @@
 * CMAKE
 * REST API
 
-## THE DIAGRAM BELOW WILL GIVE YOU A BETTER UNDERSTANDING OF HOW THIS PROGRAM WORKS.
-
-
 ## GETTING STARTED
 * This section will describe how to locally build this program. To get a local copy up and running follow these simple steps.
 
@@ -43,18 +40,19 @@
     * Verify that CMAKE is installed:
       ```
       $ cmake --version
-      ```        
+      ```      
 
 ### INSTALLATION
 * Create Python virtual environment
   ```
   $ pip3 install virtualenv
-  $ mkdir <name of directory>
-  $ python3 -m venv <name of project>
-  $ source project_env/bin/activate
+  $ mkdir <name of direcctor> NB: This is optional
+  $ python3 -m venv <name of environment> NB: I recommend naming should be same as project name but not necessary 
+  $ source <name of environment>/bin/activate
   ```
 * Clone the repo
   ```
+  $ cd <name of environment>
   $ git clone https://github.com/aquist0295/BuySellProcessor
   ```
 * Run from top-most directory, This will create a pybind11 binary module which will be used in Python scripts to expose C++ code and start 
@@ -63,6 +61,7 @@
   $  cmake .
   $  make
   $  mv Processor.cpython-39-darwin.so src/pythonFiles
+  $  cd src/pythonFiles
   ```
 ### USAGE
   * Run python script
