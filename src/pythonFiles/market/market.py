@@ -3,11 +3,12 @@ NB: This python script is owned and distributed by E*trade, some modifications h
 This script accepts user input for stock symbol(ticker) information from the user.
 It will then send a GET request to an E*trade API endpoint to retrieve that ticker information.
 The response is then filtered for relevant information i.e price of the security in question.
-The filtered information is then passed to the exposed c++ function(GetStockinfo) using the pybind11 binary module(Processor).
+The filtered information is then passed to the exposed C++ (GetStockinfo) using the pybind11 binary module(Processor).
 '''
 
 import json
-# declare the pybind11 binary module which will expose c++ code(GetStockinfo) from: /src/cppFiles/buysellExecution
+# declare the pybind11 binary module which will expose c++ code(GetStockinfo) from: /src/cppFiles/buysellExecution. This module should be built 
+# using instructions on github readme.
 import Processor as p 
 from datetime import datetime
 
@@ -48,7 +49,7 @@ class Market:
                         current_price = quote["All"]["lastTrade"]
                         print("ticker: " + ticker)
                         print("Current Price: " + str(current_price))
-                        #Calling exposed C++ function and passing arguments
+                        # Calling exposed C++ function and passing arguments
                         p.GetStockinfo(ticker, current_price)                
             else:
                 # Handle errors if response was unable to GET the information from the API endpoint

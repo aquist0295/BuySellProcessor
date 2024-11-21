@@ -1,8 +1,8 @@
 '''
-NB: This python script is owned and distributed by E*trade, some modifications have been made by the author to tailor this script for my use case.
-This script auithenticates user credenials using oauth1.
+NB: This python script is owned and distributed by E*trade, some modifications have been made by me to tailor this script for my use case.
+This script authenticates user credenials using oauth1.
 User credentials are passed to the script from  config.ini.
-Once authentication is successful a base_url and a session is generated using the user credentials.
+Once user credentials have been authenticated successfully a base_url and a session is generated for that user(NB: An E*trade account is necessary here).
 main_menu() is then executed with the base_url and session information and the market script is called, refer to: /src/pythonFiles/market/market.py
 '''
 
@@ -12,9 +12,9 @@ import configparser
 from rauth import OAuth1Service
 from market.market import Market
 
-#loading configuration file
+# loading configuration file
 config = configparser.ConfigParser()
-#refer to .gitignore for this file. This file contains keys for authentication. NB Each user should have unique keys.
+# The config.ini file will contain user keys and other api endpoints refer to: /Processor/src/pythonFiles/config.ini for more information.
 config.read('config.ini')
 
 def oauth():
