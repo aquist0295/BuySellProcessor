@@ -5,7 +5,7 @@
 ## This sample project was built as a simple execution engine to showcase the following:
 * How to effectively use REST APIs to GET information from endpoints using Python.
 * How to pass that information to C++ by exposing C++ code to Python using pybind11.
-* How to use OOP concepts effectively: inheritance, encapsulation, classes and objects, etc
+* How to use OOP concepts effectively: inheritance, encapsulation, classes and objects, etc to execute buy and sell orders for securities.
 * How to run threads in C++.
 * How to create a Python environment for testing/building purposes.
 
