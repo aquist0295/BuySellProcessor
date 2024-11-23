@@ -66,7 +66,7 @@
 ### USAGE
   * Run python script
     ```
-    $ python3 python_client.py
+    $ python python_client.py
     ```
   * Sample output
  ```
