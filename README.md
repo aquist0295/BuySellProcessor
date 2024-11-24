@@ -28,7 +28,15 @@
     * For Windows: Download and install Python from https://www.python.org/downloads/mac verify install by running:
        ```
       $ python --version
-      ```
+       ```      
+
+* install and Create Python virtual environment
+  ```
+  $ pip3 install virtualenv
+  $ mkdir <name of direcctor> NB: This is optional
+  $ python3 -m venv <name of environment> NB: I recommend naming should be same as project name but not necessary 
+  $ source <name of environment>/bin/activate
+  ```
        
 * g++ for compiling C++ code:
     * Ensure that g++ is installed.
@@ -43,13 +51,6 @@
       ```      
 
 ### INSTALLATION
-* Create Python virtual environment
-  ```
-  $ pip3 install virtualenv
-  $ mkdir <name of direcctor> NB: This is optional
-  $ python3 -m venv <name of environment> NB: I recommend naming should be same as project name but not necessary 
-  $ source <name of environment>/bin/activate
-  ```
 * Clone the repo
   ```
   $ cd <name of environment>
