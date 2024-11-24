@@ -63,7 +63,7 @@
   $ cd <name of environment>
   $ git clone https://github.com/aquist0295/BuySellProcessor
   ```
-* Run from top directory i.e </BuySellProcessor>, This will create a pybind11 binary module(Processor.cpython-39-darwin.so)
+* Run from top directory i.e /BuySellProcessor, This will create a pybind11 binary module(Processor.cpython-39-darwin.so)
 * which is called in the market.py script to expose C++ code(GetStockinfo).
   ```
   $  cmake .
