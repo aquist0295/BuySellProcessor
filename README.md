@@ -40,11 +40,18 @@
        
 * g++ for compiling C++ code:
     * Ensure that g++ is installed.
-    * For Mac install Xcode(all tools needed to compile c++). For 
-    * For Windows visit:https://code.visualstudio.com/docs/cpp/config-mingw
+    * For Mac install:
+      ```
+      brew install clang
+      ```
+    * For Windows visit: https://code.visualstudio.com/docs/cpp/config-mingw
+    * Verify that g++ is installed:
+      ```
+      g++ --version
+      ```
 
 * CMAKE:
-    * For Mac & Windows visit for more instructions:https://cmake.org/download/
+    * For Mac & Windows follow instructions here: https://cmake.org/download/
     * Verify that CMAKE is installed:
       ```
       $ cmake --version
@@ -56,8 +63,8 @@
   $ cd <name of environment>
   $ git clone https://github.com/aquist0295/BuySellProcessor
   ```
-* Run from top-most directory, This will create a pybind11 binary module which will be used in Python scripts to expose C++ code and start 
-  the program 
+* Run from top directory i.e </BuySellProcessor>, This will create a pybind11 binary module(Processor.cpython-39-darwin.so)
+* which is called in the market.py script to expose C++ code(GetStockinfo).
   ```
   $  cmake .
   $  make
