@@ -21,11 +21,11 @@
 
 ### Prerequisites
 * Python & PIP:
-    * For Mac: Download and install Python from https://www.python.org/downloads/mac verify install by running:
+    * For Mac: Download and install Python from https://www.python.org/downloads/mac and verify install by running:
       ```
       $ python --version
       ```              
-    * For Windows: Download and install Python from https://www.python.org/downloads/mac verify install by running:
+    * For Windows: Download and install Python from https://www.python.org/downloads/windows and verify install by running:
        ```
       $ python --version
        ```      
