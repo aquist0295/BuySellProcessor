@@ -1,12 +1,12 @@
-# E*trade REST API(live trading) with Pybind11 for binding with C++ execution engine.
+# E*trade REST API(live trading) with Pybind11 for binding with C++ execution.
 
-## A functional Trade execution sample project, integrating the E*trade REST API to track live security prices using Python and a binding agent(pybind11) to expose C++ code to Python scripts for execution.
+## A functional Trade execution sample project, integrating the E*trade REST API to track live security prices using Python and binding with pybind11 to expose C++ code to Python scripts.
 
 ## This sample project was built as a simple execution engine to showcase the following:
 * How to effectively use REST APIs to GET information from endpoints using Python.
 * How to pass that information to C++ by exposing C++ code to Python using pybind11.
-* How to use OOP concepts effectively: inheritance, encapsulation, classes and objects, etc to execute buy and sell orders for securities.
-* How to run threads in C++.
+* How to use OOP concepts effectively: inheritance, encapsulation, classes, objects, templates etc to execute buy and sell orders for securities.
+* How to create and run threads in C++.
 * How to create a Python environment for testing/building purposes.
 
 ## BUILT WITH
