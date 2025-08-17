@@ -77,10 +77,10 @@ NB: multi-threading will be used here to concurrently monitor transactions in th
             P.AddToBuyQueue();
 
             //call CheckBuyPriceMatch as a thread to monitor price changes for this security.
-            /*std::thread t1([&P, price, buyPrice, buyQuantity] () {P.CheckBuyPriceMatch(price, buyPrice, buyQuantity);});
+            std::thread t1(&QueueOrders::CheckBuyPriceMatch, &P, price, buyPrice, buyQuantity);
 
+            //detach the thread to allow it to run concurrently.
             t1.detach();
-            */
         }
     }
     else {
@@ -92,10 +92,9 @@ NB: multi-threading will be used here to concurrently monitor transactions in th
             P.AddToSellQueue();
 
             //call CheckSellPriceMatch as a thread to monitor price changes for this security.
-            /*std::thread t1([&P, price, buyPrice, buyQuantity] () {P.CheckSellPriceMatch(price, sellPrice, sellQuantity);});
+            std::thread t1(&QueueOrders::CheckSellPriceMatch, &P, price, sellPrice, sellQuantity);
 
             t1.detach();
-            */
        }
     }
 
