@@ -23,43 +23,14 @@
   
 
 ### Prerequisites
-* Python & PIP:
-    * For Mac: Download and install Python from https://www.python.org/downloads/mac and verify the installation by running:
-      ```
-      $ python --version
-      ```              
-    * For Windows: Download and install Python from https://www.python.org/downloads/windows and verify the installation by running:
-       ```
-      $ python --version
-       ```      
-
-* Install Docker:
+* Docker
    * For Mac: https://docs.docker.com/desktop/setup/install/mac-install/
    * For Windows: https://docs.docker.com/desktop/setup/install/windows-install/
-       
-* g++ for compiling C++ code:
-    * Ensure that g++ is installed.
-    * For Mac install:
-      ```
-      brew install clang
-      ```
-    * For Windows, visit: https://code.visualstudio.com/docs/cpp/config-mingw
-    * Verify that g++ is installed:
-      ```
-      g++ --version
-      ```
 
-* CMAKE:
-    * For Mac & Windows, follow instructions here: https://cmake.org/download/
-    * Verify that CMAKE is installed:
-      ```
-      $ cmake --version
-      ```      
-
+     
 ### INSTALLATION & USAGE
 * Clone the repo
   ```
-  $ cd <name of environment>
   $ git clone https://github.com/aquist0295/BuySellProcessor
   ```
 * Run from top directory, i.e,/BuySellProcessor. This will create a pybind11 binary module(processor.cpython-310-aarch64-linux-gnu.so) in the Docker image.
