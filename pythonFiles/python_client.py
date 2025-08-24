@@ -11,17 +11,19 @@ import webbrowser
 import configparser
 from rauth import OAuth1Service
 from market.market import Market
+from sign_in_automation import automate_sign_in
 
 # loading configuration file
 config = configparser.ConfigParser()
 # refer to .gitignore for this file. This file contains keys for authentication. NB Each user should have unique keys 
+#config.read('/app/pythonFiles/config.ini')
 config.read('/app/pythonFiles/config.ini')
 
 def oauth():
     """Allows user authorization for the sample application with OAuth 1"""
     etrade = OAuth1Service(
         name="etrade",
-        consumer_key=config['DEFAULT']['CONSUMER_KEY'],
+        consumer_key=config["DEFAULT"]["CONSUMER_KEY"],
         consumer_secret=config["DEFAULT"]["CONSUMER_SECRET"],
         request_token_url="https://api.etrade.com/oauth/request_token",
         access_token_url="https://api.etrade.com/oauth/access_token",
@@ -37,8 +39,9 @@ def oauth():
     # Step 2: Go through the authentication flow. Login to E*TRADE.
     # After you login, the page will provide a verification code to enter.
     authorize_url = etrade.authorize_url.format(etrade.consumer_key, request_token)
-    webbrowser.open(authorize_url)
-    text_code = input("Please accept agreement and enter verification code from browser: ")
+    #webbrowser.open(authorize_url)
+    verification_code = automate_sign_in(authorize_url)
+    text_code = input("Please accept agreement and enter verification code from browser:{}".format(verification_code))
 
     # Step 3: Exchange the authorized request token for an authenticated OAuth 1 session
     session = etrade.get_auth_session(request_token,request_token_secret,params={"oauth_verifier": text_code})
