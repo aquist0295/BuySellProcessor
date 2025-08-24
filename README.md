@@ -16,10 +16,10 @@
 * CMAKE
 * REST API
 * Docker
+* Selenium and Google Chrome for web automation
 
 ## GETTING STARTED
 * This section will describe how to build a Docker image of the project and run the project within a container.
-* NB: To run the project, you may need to allow your container to access your browser on your host machine. (Implementation will be added shortly)
   
 
 ### Prerequisites
@@ -39,7 +39,14 @@
   $ docker build -t processor:latest .
   $ docker run -it processor 
   ```
-  
+* For M1 Mac, please follow these directions to build a Docker image and run a container
+  ```
+  $ docker build --platform linux/amd64 -t processor:latest .
+  $ docker run -it processor 
+  ```
+
+  NB: Automation will sign the user into the extrade application, but will not copy the code to authenticate the user. Implementation for the complete automation will added shortly.
+   
 * Sample output
  ```
  /Users/anthonyquist/Documents/python-vms/testing_final_env/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020warnings.warn(
