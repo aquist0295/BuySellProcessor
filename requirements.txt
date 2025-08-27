@@ -1,3 +1,6 @@
 #python dependencies
 
 rauth
+pybind11
+selenium
+webdriver_manager
