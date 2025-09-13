@@ -17,7 +17,7 @@ from sign_in_automation import automate_sign_in
 config = configparser.ConfigParser()
 # refer to .gitignore for this file. This file contains keys for authentication. NB Each user should have unique keys 
 #config.read('/app/pythonFiles/config.ini')
-config.read('/app/pythonFiles/config.ini')
+config.read('config.ini')
 
 def oauth():
     """Allows user authorization for the sample application with OAuth 1"""
@@ -41,7 +41,9 @@ def oauth():
     authorize_url = etrade.authorize_url.format(etrade.consumer_key, request_token)
     #webbrowser.open(authorize_url)
     verification_code = automate_sign_in(authorize_url)
-    text_code = input("Please accept agreement and enter verification code from browser:{}".format(verification_code))
+    text_code = verification_code
+    #text_code = input("Please accept agreement and enter verification code from browser: ")
+    #print(text_code)
 
     # Step 3: Exchange the authorized request token for an authenticated OAuth 1 session
     session = etrade.get_auth_session(request_token,request_token_secret,params={"oauth_verifier": text_code})
