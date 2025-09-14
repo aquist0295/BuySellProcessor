@@ -7,17 +7,17 @@ from webdriver_manager.chrome import ChromeDriverManager
 def automate_sign_in(authorize_url):
     # Set up Chrome options for headless browsing(uncomment to run in headless mode)
     chrome_options = Options()
-    #chrome_options.add_argument('--no-sandbox')
-    #chrome_options.add_argument('--headless=new')
-    #chrome_options.add_argument("--window-size=1920,1080")
-    #chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--headless=new')
+    chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.add_argument('--disable-dev-shm-usage')
 
     # install the ChromeDriver and create a new instance of the Chrome browser
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
     # open the external browser and navigate to the authorize_url
     driver.get(authorize_url)
-
+    # Wait for the page to load
     driver.implicitly_wait(10)
 
     # Locate the username and password fields and sign in button
@@ -36,22 +36,32 @@ def automate_sign_in(authorize_url):
     # Locate the send code button, this is only needed once for broswser verification 
     send_code_button = driver.find_element(By.ID, "sendOTPCodeBtn")
     
-    try:
-        # if the browser is already verified this step can be skipped
-        if len(send_code_button) > 0:
-            send_code_button.click()
-            # Wait for the page to load after sign-in
-            driver.implicitly_wait(40)
-        else:
-            driver.implicitly_wait(5)
+    # if the browser is already verified this step can be skipped
+    if send_code_button.is_displayed():
+        # Click the send code button to send the MFA code to your device
+        send_code_button.click()
+        # Wait for the page to load after sending the code
+        driver.implicitly_wait(40)
+        # Prompt the user to enter the MFA code received on their device
+        mfa_code = input("Please enter mfa verification code from your device: ")
+        # Locate the verification code input field and submit button
+        verification_box = driver.find_element(By.ID, "verificationCode")
+        # Enter the MFA code
+        verification_box.send_keys(mfa_code)
 
-    # exception handling if any error occurs
-    except Exception as e:
-        print(f"An error occurred: {e}")   
+        # Locate and click the submit button
+        submit_code_button = driver.find_element(By.CLASS_NAME, "vertical-offset-md btn btn-block btn-lg btn-primary")
+        # Click the submit button to complete the sign-in process
+        submit_code_button.click()
+        # Wait for the page to load after sign-in
+        driver.implicitly_wait(5)
+    else:
+        print("Browser already verified, proceeding to next step...")
+        driver.implicitly_wait(5) 
     
     # Locate the accept agreement button
     accept_button = driver.find_element(By.ID, "acceptSubmit")
-    driver.get_screenshot_as_file("screenshot.png")
+    # Click the accept agreement button to accept the terms
     accept_button.click()
 
     # Wait for the page to load after accepting the agreement
