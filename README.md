@@ -56,8 +56,13 @@
   $ cd < top directory from the prerequisites section >
   $ python3 pythonFiles/python_client.py
   ```
-* 
-  
+* MFA authentication
+  ```
+  $ Please enter mfa verification code from your device: < Enter code sent to your phone number here >
+  ```
+## DO NOT INTERUPT THE BROWSER !!! ALL OTHER STEPS ARE AUTOMATED.  
+
+## Please skip section for now : Docker implementation coming shortly
 * Build a Docker image and create a container
   ```
   $ docker build -t processor:latest .
@@ -68,9 +73,7 @@
   $ docker build --platform linux/amd64 -t processor:latest .
   $ docker run -it processor 
   ```
-
-  NB: Automation will sign the user into the extrade application, but will not copy the code to authenticate the user. Implementation for the complete automation will added shortly.
-   
+  
 * Sample output
  ```
  /Users/anthonyquist/Documents/python-vms/testing_final_env/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020warnings.warn(
