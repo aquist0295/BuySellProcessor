@@ -8,7 +8,7 @@ def automate_sign_in(authorize_url):
     # Set up Chrome options for headless browsing(uncomment to run in headless mode)
     chrome_options = Options()
     chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--headless=new')
+    #chrome_options.add_argument('--headless=new')
     chrome_options.add_argument("--window-size=1920,1080")
     chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument("--disable-gpu")
@@ -35,10 +35,13 @@ def automate_sign_in(authorize_url):
     sign_in_button.click() 
 
     # Wait for the page to load after sign-in
-    driver.implicitly_wait(10)
+    driver.implicitly_wait(5)
+
+    # Locate send OTP code button 
+    sendOTPCodeBtn_elements = driver.find_elements(By.ID, "sendOTPCodeBtn")
     
     # if the browser is already verified this step can be skipped
-    if driver.find_element(By.ID, "sendOTPCodeBtn").is_displayed():
+    if len(sendOTPCodeBtn_elements) > 0:
         # Click the send code button to send the MFA code to your device
         driver.find_element(By.ID, "sendOTPCodeBtn").click()
         # Wait for the page to load after sending the code
@@ -59,10 +62,11 @@ def automate_sign_in(authorize_url):
         # Click the submit button to complete the sign-in process
         submit_code_button.click()
         # Wait for the page to load after sign-in
-        driver.implicitly_wait(5)
+        driver.implicitly_wait(5)      
     else:
         print("Browser already verified, proceeding to next step...")
         driver.implicitly_wait(5) 
+    
     
     # Locate the accept agreement button
     accept_button = driver.find_element(By.ID, "acceptSubmit")
