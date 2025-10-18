@@ -6,9 +6,9 @@
 * How to effectively use REST APIs to GET information from endpoints using Python.
 * How to automate web functionality for faster and easier access using Selenium.
 * How to pass information from a REST API in Python to C++, by exposing C++ code to Python using pybind11 bindings.
-* How to use OOP and C++ concepts effectively: inheritance, encapsulation, classes, objects, templates, etc, effectively.
+* How to use OOP and C++ concepts effectively: inheritance, encapsulation, classes, objects, templates, etc.
 * How to create and run threads in C++.
-* How to use Docker containers. NB: the Dockerfile is effective and works, unfortunately, due to OATH authentication, headless browser mode will not be possible. A work-around would be to add a display to ensure sign-in(I will add that functionality soon using either VNC or X11). 
+* How to use Docker containers. NB: the Dockerfile is effective and works, unfortunately, due to OATH authentication, headless browser mode is not possible. A workaround is to add a display to ensure sign-in(that functionality will be added shortly using either VNC or X11). 
 
 ## BUILT WITH
 * Python
@@ -21,41 +21,43 @@
 
 ## GETTING STARTED
 * This section will describe how to get the project running on your local machine.
-* Execution within a Docker container will be added soon. Ochestration with Kubernetes - using minikube.
+* Execution within a Docker container will be added shortly. Ochestration with Kubernetes will be added shortly as well - using minikube.
   
-
 ### Prerequisites
-* Local Machine using a terminal running Linux 
-     ```
-     $ mkdir -p <name of directory>
-     ```
+* Local Machine using a terminal running Linux (This assumes you have python3 installed)
+* Alternatively, you can run a Python venv. follow the steps here: (https://medium.com/@lucasthedev/a-comprehensive-guide-to-python-virtual-environments-with-venv-cb76fea6a550)
+   ```
+   $ mkdir -p <name of directory>
+   $ git clone https://github.com/aquist0295/BuySellProcessor
+   ```
 * Docker (a linked display to the container is required if using a Docker container and Selenium Chrome)
+* Below are resources to help you get started with docker and docker-desktop.
    * For Mac: https://docs.docker.com/desktop/setup/install/mac-install/
    * For Windows: https://docs.docker.com/desktop/setup/install/windows-install/
 
      
 ### INSTALLATION & USAGE
-* Clone the repo
-  ```
-  $ git clone https://github.com/aquist0295/BuySellProcessor
-  ```
-* Update config.ini with CONSUMER_KEY & CONSUMER_SECRET NB: an Etrade account is required for this. Using an editor of your choice(i.e nano, vim, visual-studio) - in this example,I will use vim, since it's available in most Linux distributions. 
+* Update config.ini with CONSUMER_KEY & CONSUMER_SECRET NB: an Etrade account is required. Using an editor of your choice(i.e nano, vim, visual-studio) - For this tutorial, i will use vim, since it's available in most Linux distributions. 
   ```
   $ vim /BuySellProcessor/pythonFiles/config.ini
-
   
+  >> CONSUMER_KEY = < Enter CONSUMER_KEY here >
+  >> CONSUMER_SECRET = < Enter CONSUMER_SECRET here >
   ```
-* Update sign_in_automation.py with both username and password within the script, this will automate sign-in. NB: MFA authentications will send a token to your phone associated with your account at some point in the sign-in process.
+* Update sign_in_automation.py with Etrade username and password. This will automate sign-in. NB: Etrade's MFA authentications will send a token to the phone number associated with your account during the sign-in process.
   ```
   $ vim /BuySellProcessor/pythonFiles/sign_in_automation.py
 
-  user_input.send_keys("") # Enter with your username
-  password_input.send_keys("") # Enter with your password
+  >> user_input.send_keys("") # Enter with your username
+  >> password_input.send_keys("") # Enter with your password
   ```  
-* On local machine run(this assumes you have installed python3) alternatively you can run a Python venv follow steps here(https://medium.com/@lucasthedev/a-comprehensive-guide-to-      python-virtual-environments-with-venv-cb76fea6a550):
+* Run the application
   ```
-  $ python3 python3 pythonFiles/python_client.py
-  ```  
+  $ cd < top directory from the prerequisites section >
+  $ python3 pythonFiles/python_client.py
+  ```
+* 
+  
 * Build a Docker image and create a container
   ```
   $ docker build -t processor:latest .
