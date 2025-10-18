@@ -56,13 +56,13 @@
   $ cd < top directory from the prerequisites section >
   $ python3 pythonFiles/python_client.py
   ```
-* MFA authentication
+* MFA authentication: You should see the output below in the terminal. Enter the MFA code sent by Etrade to your phone number here and press ENTER.
   ```
   $ Please enter mfa verification code from your device: < Enter code sent to your phone number here >
   ```
-## DO NOT INTERUPT THE BROWSER !!! ALL OTHER STEPS ARE AUTOMATED.  
+## DO NOT INTERUPT THE BROWSER !!! ALL STEPS ARE AUTOMATED.  
 
-## Please skip section for now : Docker implementation coming shortly
+## Please skip section: Docker implementation coming shortly
 * Build a Docker image and create a container
   ```
   $ docker build -t processor:latest .
